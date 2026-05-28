@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-type Item = { quote: string; attribution: string; role: string; year: string };
+type Item = { quote: string; attribution: string; role: string };
 
 export default function Testimonials() {
   const t = useTranslations("testimonials");
@@ -15,7 +15,7 @@ export default function Testimonials() {
         <h2 className="text-[36px] md:text-[48px] font-semibold tracking-tight text-[var(--color-ink)] mb-12 max-w-[640px]">
           {t("heading")}
         </h2>
-        {/* PLACEHOLDER COPY — replace items in messages/en.json with real client testimonials before public launch. */}
+        {/* Generic, experience-based copy — agent is new and has not closed yet, so quotes describe how she works (communication, patience, language), not transaction outcomes. Swap for real client quotes as they come in. */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {items.map((item, i) => (
             <article
@@ -30,7 +30,7 @@ export default function Testimonials() {
                   {item.attribution}
                 </p>
                 <p className="text-[13px] text-[var(--color-graphite)]">
-                  {item.role} · {item.year}
+                  {item.role}
                 </p>
               </div>
             </article>

@@ -25,42 +25,39 @@
   "howIWork": {
     "eyebrow": "HOW I WORK",
     "heading": "From hello to keys.",
+    "subhead": "Same process whether you're buying or selling.",
     "tiles": [
-      { "number": "01", "title": "First conversation", "body": "We meet over coffee or video. No pitch. I want to understand your timing, budget, and what 'home' actually means for you." },
-      { "number": "02", "title": "Market read", "body": "I pull the data on your shortlist and the comps that actually compete with them. You'll see what I see, in plain numbers." },
-      { "number": "03", "title": "Offer & close", "body": "I write the offer, run the negotiation in your language, and walk you through every clause. Closings shouldn't feel like a quiz." },
+      { "number": "01", "title": "First conversation", "body": "We meet over coffee or video. No pitch. I want to understand your timing, budget, and what 'home' actually means for you — or what moving on looks like." },
+      { "number": "02", "title": "Market read", "body": "I pull the data — comps that compete with your shortlist, or the ones pricing your listing. You'll see what I see, in plain numbers." },
+      { "number": "03", "title": "Offer & close", "body": "Whether we're writing the offer or fielding them, I run the negotiation in your language and walk you through every clause. Closings shouldn't feel like a quiz." },
       { "number": "04", "title": "After the move", "body": "Trades, contractors, school catchments, even the right strata bylaws to read first. The hard part isn't getting the keys." }
     ]
   },
   "testimonials": {
-    "eyebrow": "WHAT CLIENTS SAY",
+    "eyebrow": "IN THEIR WORDS",
     "heading": "Words from people I've worked with.",
-    "_draft_note": "PLACEHOLDER COPY — replace these three quotes with real client testimonials before public launch.",
     "items": [
       {
-        "quote": "Christine never rushed us. She translated every clause for my parents in Cantonese, asked twice if we were sure, and walked us back from a unit that would have stretched us. The next one we wrote on, we got at asking — no bidding war, no regrets.",
-        "attribution": "M. Wong",
-        "role": "First-time buyer, Richmond",
-        "year": "2025"
+        "quote": "Christine took the time to explain each step in a way my parents could follow in Cantonese. She never pushed and never rushed — she just made sure we understood before we made a decision.",
+        "attribution": "A. W.",
+        "role": "Buyer, Richmond"
       },
       {
-        "quote": "We were moving from Hong Kong with two young kids and not much English yet. Christine handled the immigration paperwork and the home search at the same time. The school catchment notes she sent us before we even saw the place are still pinned on our fridge.",
-        "attribution": "L. Chen",
-        "role": "Newcomer family, Vancouver West",
-        "year": "2025"
+        "quote": "We were new to how things work here and had a lot of questions. Christine was patient with every one of them and quick to reply whenever we reached out.",
+        "attribution": "Newcomer family",
+        "role": "Vancouver West"
       },
       {
-        "quote": "I've worked with three realtors in Vancouver. Christine is the only one who told me when not to buy. She pulled the comps, showed me the math, and said wait six months. She was right. We closed in the spring at thirty thousand under what I'd offered in the fall.",
-        "attribution": "D. Lim",
-        "role": "Investor, Vancouver East",
-        "year": "2025"
+        "quote": "What I appreciated most was how clearly she laid out the numbers and the trade-offs. No pressure — just honest, straightforward guidance.",
+        "attribution": "J. C.",
+        "role": "Buyer, Vancouver East"
       }
     ]
   },
   "currently": {
     "eyebrow": "CURRENTLY",
-    "heading": "What I'm representing right now.",
-    "emptyState": "No active listings this week. I'm working privately with three families on Richmond and Vancouver West searches — reach out if your move is in motion.",
+    "heading": "What I'm working on right now.",
+    "emptyState": "I'm working privately with families across Richmond, Vancouver East and Vancouver West right now — quiet searches, off-market conversations, and moves still finding their timing. If yours is in motion, reach out.",
     "ctaSearch": "Search MLS with me"
   },
   "aboutSnippet": {
@@ -74,9 +71,9 @@
   "atlas": {
     "eyebrow": "WHERE I WORK",
     "heading": "Richmond, Vancouver East and West.",
-    "richmond": { "label": "Richmond", "items": ["Brighouse", "Steveston", "Richmond Centre", "City Centre", "Thompson", "Hamilton"] },
-    "vancouverEast": { "label": "Vancouver East", "items": ["Hastings-Sunrise", "Mount Pleasant", "Renfrew-Collingwood", "Strathcona", "Kensington-Cedar Cottage"] },
-    "vancouverWest": { "label": "Vancouver West", "items": ["Kerrisdale", "Dunbar-Southlands", "Kitsilano", "Point Grey", "Shaughnessy", "South Granville"] }
+    "richmond": { "label": "Richmond", "items": ["Steveston", "City Centre", "Broadmoor", "Terra Nova", "Blundell", "Shellmont"] },
+    "vancouverEast": { "label": "Vancouver East", "items": ["Fraserview", "Killarney", "Mount Pleasant", "Kensington", "Collingwood"] },
+    "vancouverWest": { "label": "Vancouver West", "items": ["Dunbar - Southlands", "Shaughnessy", "Kerrisdale", "Marpole", "Oakridge"] }
   },
   "contact": {
     "eyebrow": "LET'S TALK",

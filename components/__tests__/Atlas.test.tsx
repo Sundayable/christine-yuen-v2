@@ -14,7 +14,7 @@ describe("Atlas", () => {
     expect(screen.getByText("Richmond")).toBeInTheDocument();
     expect(screen.getByText("Vancouver East")).toBeInTheDocument();
     expect(screen.getByText("Vancouver West")).toBeInTheDocument();
-    expect(screen.getByText(/Brighouse/)).toBeInTheDocument();
+    expect(screen.getByText(/Steveston/)).toBeInTheDocument();
     expect(screen.getByText(/Kerrisdale/)).toBeInTheDocument();
     expect(screen.getByText(/Mount Pleasant/)).toBeInTheDocument();
   });
