@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendLeadToSundayable } from "@/lib/sundayable";
 
 // TODO: fill in PRICE_PER_SQFT with current local market $/sqft.
 // Must match EstimatorForm.tsx neighborhood keys exactly.
@@ -52,7 +53,11 @@ export async function POST(req: Request) {
     serverEstimate,
   };
 
-  if (webhookUrl) {
+  const sheetsWebhook = async () => {
+    if (!webhookUrl) {
+      console.log("estimate submission (no webhook configured):", payload);
+      return;
+    }
     try {
       await fetch(webhookUrl, {
         method: "POST",
@@ -62,9 +67,30 @@ export async function POST(req: Request) {
     } catch (err) {
       console.error("estimate webhook failed:", err);
     }
-  } else {
-    console.log("estimate submission (no webhook configured):", payload);
-  }
+  };
+
+  const b = body as Record<string, string>;
+  const fmtRange = serverEstimate
+    ? `Est. range: $${Math.round(serverEstimate.low).toLocaleString()}–$${Math.round(serverEstimate.high).toLocaleString()}`
+    : "Est. range: n/a (market data not yet configured)";
+  const estimateNotes = [
+    "Home-value estimate request",
+    `Type: ${propertyType} · Neighborhood: ${neighborhood}`,
+    b.address ? `Address: ${b.address}` : null,
+    `Beds/Baths: ${b.beds || "—"}/${b.baths || "—"} · SqFt: ${sqft} · Year: ${b.yearBuilt || "—"}`,
+    `Condition: ${condition} · Reason: ${b.reason || "—"}`,
+    fmtRange,
+    `Source: ${payload.source}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  // Sheets webhook + Sundayable ingest run concurrently; allSettled isolates
+  // failures so neither blocks the other or the visitor's optimistic success.
+  await Promise.allSettled([
+    sheetsWebhook(),
+    sendLeadToSundayable({ name, email, phone: b.phone, notes: estimateNotes }),
+  ]);
 
   return NextResponse.json({ ok: true, estimate: serverEstimate });
 }

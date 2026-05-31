@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendLeadToSundayable } from "@/lib/sundayable";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -22,7 +23,11 @@ export async function POST(req: Request) {
     source: `${process.env.NEXT_PUBLIC_SITE_URL ?? "example.ca"}/contact`,
   };
 
-  if (webhookUrl) {
+  const sheetsWebhook = async () => {
+    if (!webhookUrl) {
+      console.log("contact submission (no webhook configured):", payload);
+      return;
+    }
     try {
       await fetch(webhookUrl, {
         method: "POST",
@@ -32,9 +37,20 @@ export async function POST(req: Request) {
     } catch (err) {
       console.error("contact webhook failed:", err);
     }
-  } else {
-    console.log("contact submission (no webhook configured):", payload);
-  }
+  };
+
+  // Run the Sheets webhook and the Sundayable lead ingest concurrently. Both are
+  // awaited (serverless can freeze after the response) but isolated via
+  // allSettled so one failing never blocks the other or the visitor's success.
+  await Promise.allSettled([
+    sheetsWebhook(),
+    sendLeadToSundayable({
+      name,
+      email,
+      phone,
+      notes: [message, `Source: ${payload.source}`].filter(Boolean).join("\n\n"),
+    }),
+  ]);
 
   return NextResponse.json({ ok: true });
 }
