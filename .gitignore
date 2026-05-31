@@ -15,3 +15,7 @@ tsconfig.tsbuildinfo
 scripts/headshot-source.jpg
 
 .vercel
+
+# Python
+__pycache__/
+*.pyc
