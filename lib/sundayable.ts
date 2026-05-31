@@ -72,6 +72,8 @@ export async function sendLeadToSundayable(input: {
       console.error(`[sundayable] ingest failed ${res.status}: ${text.slice(0, 300)}`);
       return { ok: false, status: res.status };
     }
+    const ok = await res.text().catch(() => "");
+    console.log(`[sundayable] ingest ok ${res.status} repUserId=${REP_USER_ID} ${ok.slice(0, 200)}`);
     return { ok: true, status: res.status };
   } catch (err) {
     console.error("[sundayable] ingest error:", err);
