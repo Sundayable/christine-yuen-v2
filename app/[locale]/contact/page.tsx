@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import ContactForm from "@/components/ContactForm";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://christineyuenrealty.ca";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vancityhouses.com";
 
 export async function generateMetadata({
   params,

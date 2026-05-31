@@ -7,7 +7,7 @@ import WelcomeStrip from "@/components/WelcomeStrip";
 import HospitalityFooter from "@/components/HospitalityFooter";
 import { JsonLd } from "@/components/JsonLd";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://christineyuenrealty.ca";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vancityhouses.com";
 
 export async function generateMetadata({
   params,

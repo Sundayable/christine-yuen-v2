@@ -113,7 +113,7 @@ def make_og_card() -> Image.Image:
     draw.text((text_x, 510), role, fill=GRAPHITE, font=role_font)
 
     draw.line([(text_x, 555), (text_x + 580, 555)], fill=GOLD, width=1)
-    draw.text((text_x, 570), "christineyuenrealty.ca", fill=GOLD_DARK, font=role_font)
+    draw.text((text_x, 570), "vancityhouses.com", fill=GOLD_DARK, font=role_font)
 
     return canvas
 
