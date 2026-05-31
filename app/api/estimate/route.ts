@@ -43,33 +43,8 @@ export async function POST(req: Request) {
 
   // TODO: once the realtor's domain email is set up, wire a transactional email
   // send here (Brevo SDK using BREVO_API_KEY) so they get the lead in their inbox.
-  const webhookUrl = process.env.ESTIMATE_SHEETS_WEBHOOK_URL ?? process.env.CONTACT_SHEETS_WEBHOOK_URL;
-  const payload = {
-    timestamp: new Date().toISOString(),
-    // TODO: replace with actual production domain
-    source: `${process.env.NEXT_PUBLIC_SITE_URL ?? "example.ca"}/value`,
-    formType: "estimate",
-    ...body,
-    serverEstimate,
-  };
-
-  const sheetsWebhook = async () => {
-    if (!webhookUrl) {
-      console.log("estimate submission (no webhook configured):", payload);
-      return;
-    }
-    try {
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-    } catch (err) {
-      console.error("estimate webhook failed:", err);
-    }
-  };
-
   const b = body as Record<string, string>;
+  const source = `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://vancityhouses.com"}/value`;
   const fmtRange = serverEstimate
     ? `Est. range: $${Math.round(serverEstimate.low).toLocaleString()}–$${Math.round(serverEstimate.high).toLocaleString()}`
     : "Est. range: n/a (market data not yet configured)";
@@ -80,17 +55,30 @@ export async function POST(req: Request) {
     `Beds/Baths: ${b.beds || "—"}/${b.baths || "—"} · SqFt: ${sqft} · Year: ${b.yearBuilt || "—"}`,
     `Condition: ${condition} · Reason: ${b.reason || "—"}`,
     fmtRange,
-    `Source: ${payload.source}`,
+    `Source: ${source}`,
   ]
     .filter(Boolean)
     .join("\n");
 
-  // Sheets webhook + Sundayable ingest run concurrently; allSettled isolates
-  // failures so neither blocks the other or the visitor's optimistic success.
-  await Promise.allSettled([
-    sheetsWebhook(),
+  // Primary destination is Sundayable (the CRM). The Google Sheets webhook is
+  // optional/legacy — only attempted when a webhook URL is set, and never blocks
+  // the Sundayable ingest. Both awaited so serverless doesn't freeze early.
+  const tasks: Promise<unknown>[] = [
     sendLeadToSundayable({ name, email, phone: b.phone, notes: estimateNotes }),
-  ]);
+  ];
 
+  const webhookUrl = process.env.ESTIMATE_SHEETS_WEBHOOK_URL ?? process.env.CONTACT_SHEETS_WEBHOOK_URL;
+  if (webhookUrl) {
+    const payload = { timestamp: new Date().toISOString(), source, formType: "estimate", ...body, serverEstimate };
+    tasks.push(
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((err) => console.error("estimate webhook failed:", err)),
+    );
+  }
+
+  await Promise.allSettled(tasks);
   return NextResponse.json({ ok: true, estimate: serverEstimate });
 }
