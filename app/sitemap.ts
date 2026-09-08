@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 
+import { siteUrl } from "@/lib/site-url";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  // TODO: replace with actual production domain (set NEXT_PUBLIC_SITE_URL env var)
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.ca";
+  const base = siteUrl();
   const lastModified = new Date();
-  const routes = ["", "/about", "/presales", "/value", "/contact"];
+  // Keep in sync with app/[locale]/*/page.tsx — every entry must be a real route.
+  const routes = ["", "/about", "/process", "/value", "/contact"];
   return routes.map((route) => ({
     url: `${base}/en${route}`,
     lastModified,

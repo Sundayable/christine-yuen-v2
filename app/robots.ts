@@ -1,16 +1,18 @@
 import type { MetadataRoute } from "next";
 
+import { siteUrl } from "@/lib/site-url";
+
 export default function robots(): MetadataRoute.Robots {
+  const base = siteUrl();
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/ko/"],
+        disallow: ["/api/"],
       },
     ],
-    // TODO: replace with actual production domain
-    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.ca"}/sitemap.xml`,
-    host: process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.ca",
+    sitemap: `${base}/sitemap.xml`,
+    host: base,
   };
 }
